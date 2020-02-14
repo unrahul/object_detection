@@ -1,0 +1,7 @@
+tensorflow_hub
+matplotlib
+pillow
+psutil
+quart
+uvloop
+quart-cors
