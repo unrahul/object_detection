@@ -5,3 +5,5 @@ psutil
 quart
 uvloop
 quart-cors
+hypercorn
+hypercorn[uvloop]

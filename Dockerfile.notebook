@@ -10,7 +10,6 @@ COPY ./. /workspace/
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN echo -e "\e[31mThis server should only be used for debugging purposes."
-ENTRYPOINT ["python", "-c ", "hypercorn","-kuvloop", "-b0.0.0.0:5059", "--debug", "-w1"]
-CMD ["rest:app"]
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
 

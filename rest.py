@@ -1,14 +1,16 @@
 #!usr/bin/env python
 """a rest api for object detection"""
-#
-#
-#
 import io
 
 from PIL import Image
 
 import quart
 from quart_cors import cors
+
+
+from main import boxed_img
+from utils import display_image
+
 
 app = quart.Quart(__name__)
 cors(app)
@@ -17,8 +19,8 @@ cors(app)
 banner = {
     "what": "object detection API",
     "usage": {
-        "client": "curl -i  -X POST -F img=@data/cat.jpg 'http://localhost:5000/recog'",
-        "server": "docker run -d -p 5000:5000 stacks_img_recog",
+        "client": "curl -i  -X POST -F img=@data/cat.jpg 'http://localhost:5059/recog'",
+        "server": "docker run -d -p 5059:5059 stacks_obj_detection",
     },
 }
 
@@ -28,12 +30,12 @@ def usage():
     return quart.jsonify({"info": banner}), 201
 
 
-@app.route("/recog", methods=["POST"])
-def recog():
+@app.route("/detect", methods=["POST"])
+def detect():
     if quart.request.files.get("img"):
         img = quart.request.files["img"].read()
         img = Image.open(io.BytesIO(img))
-        y_hat = classify(img)
+        y_hat = boxed_img(img)
         return quart.jsonify({"class": y_hat[0], "prob": y_hat[1]}), 201
     return quart.jsonify({"status": "not an image file"})
 
