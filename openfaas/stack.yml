@@ -1,0 +1,14 @@
+provider:
+  name: faas
+  gateway: http://localhost:8080
+
+functions:
+  obj_detection-fn:
+    lang: Dockerfile
+    handler: ./openfaas-ocr
+    image: rahulunair/stacks-obj_detection
+    environment:
+      fprocess: "python -W ignore handler.py"
+      read_timeout: "270s"
+      write_timeout: "270s"
+      upstream_timeout: "210s"
