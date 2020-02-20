@@ -7,3 +7,4 @@ uvloop
 quart-cors
 hypercorn
 hypercorn[uvloop]
+gevent

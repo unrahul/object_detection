@@ -5,12 +5,9 @@ import io
 from PIL import Image
 
 import quart
-from quart_cors import cors
-
-
+from gevent.pywsgi import WSGIServer
 from main import boxed_img
-from utils import display_image
-
+from quart_cors import cors
 
 app = quart.Quart(__name__)
 cors(app)
@@ -46,4 +43,6 @@ def not_found(error):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5059)
+    #app.run(host="0.0.0.0", port=5059)
+    http_server = WSGIServer(('', 5059), app)
+    http_server.serve_forever()
