@@ -1,11 +1,15 @@
-import sys
+import random
+import string
 import subprocess
-import psutil
+import sys
+from io import BytesIO
 
 import matplotlib.pyplot as plt
 import numpy as np
 import PIL
-from PIL import ImageColor, ImageDraw, ImageFont
+import psutil
+from PIL import Image, ImageColor, ImageDraw, ImageFont
+
 import tensorflow as tf
 
 
@@ -34,6 +38,20 @@ def load_jpg(path):
     img = tf.io.read_file(path)
     img = tf.image.decode_jpeg(img, channels=3)
     return img
+
+
+def img_buffer(input_buff):
+    """load image to buffer and return path"""
+    img_bytes = BytesIO(input_buff)
+    image = Image.open(img_bytes).convert("RGB")
+    input_img_path = "input_img_%s.jpg" % rand_string()
+    image.save(input_img_path)
+    return input_img_path
+
+
+def rand_string():
+    rand_str = "".join(random.choices(string.ascii_letters + string.digits, k=10))
+    return rand_str
 
 
 def preprocess(img):

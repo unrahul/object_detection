@@ -4,8 +4,8 @@ provider:
 
 functions:
   obj_detection-fn:
-    lang: Dockerfile
-    handler: ./openfaas-ocr
+    lang: Dockerfile.openfaas
+    handler: ./obj_detect_handler
     image: rahulunair/stacks-obj_detection
     environment:
       fprocess: "python -W ignore handler.py"
