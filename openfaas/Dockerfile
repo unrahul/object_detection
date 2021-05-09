@@ -1,4 +1,4 @@
-FROM openfaas/of-watchdog:0.7.2 as watchdog
+FROM openfaas/of-watchdog:0.8.2 as watchdog
 From clearlinux/stacks-dlrs_2-mkl:latest
 
 COPY --from=watchdog /fwatchdog /usr/bin/fwatchdog
